@@ -4,7 +4,7 @@ const PORT = process.env.PORT;
 const app = express();
 const mysql = require("mysql");
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.HOST,
   user: process.env.DBUSER,
   port: process.env.DBPORT,
@@ -13,15 +13,20 @@ const connection = mysql.createConnection({
   insecureAuth: true,
 });
 
+app.use(express.json());
+
 app.get("/api", (req, res) => {
-  connection.connect();
-
-  connection.query("show tables;", function (error, results, fields) {
-    if (error) throw error;
-    res.json(results);
-  });
-
-  connection.end();
+  if (!req.body.table) {
+    pool.query("show tables;", (error, results) => {
+      if (error) throw error;
+      res.json(results);
+    });
+  } else {
+    pool.query(`SELECT * from ${req.body.table};`, (error, results) => {
+      if (error) throw error;
+      res.json(results);
+    });
+  }
 });
 
 app.listen(PORT, () => {
