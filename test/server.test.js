@@ -18,7 +18,7 @@ describe("api", () => {
 
   it(`should return the ${process.env.DB_RANDOM_TABLE_NAME_JSON_FILE}`, (done) => {
     request(app)
-      .get("/api")
+      .post("/api")
       .send({ table: `${process.env.DB_RANDOM_TABLE_NAME}` })
       .expect("Content-Type", /json/)
       .expect(200, randomtable)
