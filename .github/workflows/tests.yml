@@ -1,5 +1,13 @@
 name: Execute Unit Tests
 
+env:
+  PORT: ${{ secrets.PORT }}
+  HOST: ${{ secrets.HOST }}
+  DBUSER: ${{ secrets.DBUSER }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  DATABASE: ${{ secrets.DATABASE }}
+  DBPORT: ${{ secrets.DBPORT }}
+
 on:
   pull_request:
     branches: [ "production" ]
