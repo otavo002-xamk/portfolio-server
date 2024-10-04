@@ -2,9 +2,9 @@
   "name": "portfolio-server",
   "version": "1.0.0",
   "description": "MySQL-backend for Portfolio 2023",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "test": "mocha"
   },
   "author": "Tapani Voutilainen",
