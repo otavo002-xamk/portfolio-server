@@ -2,3 +2,4 @@
 node_modules/
 alltables.json
 pricelogs.json
+.vercel
