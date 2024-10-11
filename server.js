@@ -16,6 +16,7 @@ var jsonParser = bodyParser.json();
 
 app.get("/api", (_req, res) => {
   pool.query("show tables;", (error, results) => {
+    res.setHeader("Content-Type", "application/json");
     if (error) throw error;
     res.json(results);
   });
@@ -23,6 +24,7 @@ app.get("/api", (_req, res) => {
 
 app.post("/api", jsonParser, (req, res) => {
   pool.query(`SELECT * from ${req.body.table};`, (error, results) => {
+    res.setHeader("Content-Type", "application/json");
     if (error) throw error;
     res.json(results);
   });
