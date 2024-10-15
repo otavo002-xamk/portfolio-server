@@ -22,7 +22,7 @@ const pool = mysql.createPool({
 
 var jsonParser = bodyParser.json();
 
-app.get("/api", (_req, res) => {
+app.get("/_api", (_req, res) => {
   pool.query("show tables;", (error, results) => {
     res.setHeader("Content-Type", "application/json");
     if (error) throw error;
@@ -30,7 +30,7 @@ app.get("/api", (_req, res) => {
   });
 });
 
-app.post("/api", jsonParser, (req, res) => {
+app.post("/_api", jsonParser, (req, res) => {
   pool.query(`SELECT * from ${req.body.table};`, (error, results) => {
     res.setHeader("Content-Type", "application/json");
     if (error) throw error;
