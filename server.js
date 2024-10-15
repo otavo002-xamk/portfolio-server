@@ -4,7 +4,12 @@ const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONT_END_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 const pool = mysql.createPool({
   host: process.env.HOST,
