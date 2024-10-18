@@ -7,7 +7,7 @@ const cors = require("cors");
 app.use(
   cors({
     origin: process.env.FRONT_END_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST"],
   })
 );
 
