@@ -1,5 +1,5 @@
 .env
 node_modules/
 alltables.json
-pricelogs.json
+table-content.json
 .vercel
