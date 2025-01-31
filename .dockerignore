@@ -5,3 +5,7 @@ Dockerfile
 License.md
 Readme.md
 vercel.json
+.github
+.dockerignore
+.gitignore
+.env
