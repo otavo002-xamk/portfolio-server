@@ -1,0 +1,10 @@
+.vscode
+node_modules
+.gitignore
+Dockerfile
+License.md
+Readme.md
+vercel.json
+.github
+.dockerignore
+.env
