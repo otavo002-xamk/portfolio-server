@@ -7,5 +7,4 @@ Readme.md
 vercel.json
 .github
 .dockerignore
-.gitignore
 .env

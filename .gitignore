@@ -3,3 +3,4 @@ node_modules/
 alltables.json
 table-content.json
 .vercel
+/initdb.d
