@@ -3,6 +3,7 @@ const app = express();
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fs = require("fs");
 
 app.use(
   cors({
@@ -11,11 +12,14 @@ app.use(
   })
 );
 
+const secretPath = process.env.SECRET_PATH || '/run/secrets/password';
+const dbPassword = (fs.existsSync('/proc/1/cgroup')) ? fs.readFileSync(secretPath, 'utf8').trim() : process.env.PASSWORD;
+
 const pool = mysql.createPool({
   host: process.env.HOST,
   user: process.env.DBUSER,
   port: process.env.DBPORT,
-  password: process.env.PASSWORD,
+  password: dbPassword,
   database: process.env.DATABASE,
   insecureAuth: true,
 });

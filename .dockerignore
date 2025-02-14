@@ -8,3 +8,5 @@ vercel.json
 .github
 .dockerignore
 .env
+password.txt
+mysql_root_password.txt

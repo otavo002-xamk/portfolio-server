@@ -55,7 +55,26 @@ Before running tests ensure:
 
 Enter 'npm start' in the CLI to start the server. Run the tests with 'npm test' -command.
 
-To run the project in a docker container, first create a new file named 'initdb.d/init.sql' to the root directory. This is the file you should write your SQL initialization script. Then run 'docker-compose up'. This command pulls both the project's image and mysql image from the registry and then creates the containers from them. Also write the environment variables that are needed in the docker-compose file to the .env file. If you want to build the project's image locally, then you have to comment out the image-line in the docker-compose file and also uncomment the build-line.
+To run the project in a docker container:
+
+    1. Create a new file named 'initdb.d/init.sql' to the root directory. This is the file you should write your SQL initialization script.
+    
+    2. Create a file 'mysql_root_password.txt' to the root directory. Write to this file only the root password to the mysql database.
+
+    3. Create a file 'password.txt'. Write to this file only the same password that you would've normally written to .env PASSWORD value.
+
+    4. Create a .env file. Write to it the following details. Replace the example values with real values:
+
+        PORT=3001
+        DBUSER=node_client
+        DATABASE=dbname
+        DBPORT=3306
+        DB_RANDOM_TABLE_NAME=customers
+        DB_RANDOM_TABLE_NAME_JSON_FILE=table-content
+        FRONT_END_URL=http://localhost:3000
+        SECRET_PATH=/run/secrets/password
+
+    5. Run 'docker-compose up'. This command pulls both the project's image and mysql image from the registry and then creates the containers from them. If you want to build the project's image locally, then you have to comment out the image-line in the docker-compose file and also uncomment the build-line.
 
 Copyright 2023 Tapani Voutilainen
 

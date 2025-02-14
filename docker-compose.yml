@@ -15,12 +15,14 @@ services:
       - PORT=${PORT}
       - HOST=db
       - DBUSER=${DBUSER}
-      - PASSWORD=${PASSWORD}
       - DATABASE=${DATABASE}
       - DBPORT=${DBPORT}
       - DB_RANDOM_TABLE_NAME=${DB_RANDOM_TABLE_NAME}
       - DB_RANDOM_TABLE_NAME_JSON_FILE=${DB_RANDOM_TABLE_NAME_JSON_FILE}
       - FRONT_END_URL=${FRONT_END_URL}
+      - PASSWORD_FILE=/run/secrets/password
+    secrets:
+      - password
     depends_on:
       - db
   db:
@@ -29,9 +31,9 @@ services:
     container_name: db
     env_file: .env
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_INIT_SCRIPTS=/docker-entrypoint-initdb.d/init.sql
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_password
     volumes:
       - mysql_data:/var/lib/mysql
       - ./initdb.d/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -40,6 +42,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    secrets:
+      - mysql_root_password
 
 volumes:
   mysql_data:
+
+secrets:
+  password:
+    file: password.txt
+  mysql_root_password:
+    file: mysql_root_password.txt

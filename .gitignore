@@ -4,3 +4,5 @@ alltables.json
 table-content.json
 .vercel
 /initdb.d
+password.txt
+mysql_root_password.txt
