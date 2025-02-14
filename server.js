@@ -13,7 +13,7 @@ app.use(
 );
 
 const secretPath = process.env.SECRET_PATH || '/run/secrets/password';
-const dbPassword = (fs.existsSync('/proc/1/cgroup')) ? fs.readFileSync(secretPath, 'utf8').trim() : process.env.PASSWORD;
+const dbPassword = (fs.existsSync(secretPath)) ? fs.readFileSync(secretPath, 'utf8').trim() : process.env.PASSWORD;
 
 const pool = mysql.createPool({
   host: process.env.HOST,
