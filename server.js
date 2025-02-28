@@ -12,8 +12,15 @@ app.use(
   })
 );
 
-const secretPath = process.env.SECRET_PATH || '/run/secrets/password';
-const dbPassword = (fs.existsSync(secretPath)) ? fs.readFileSync(secretPath, 'utf8').trim() : process.env.PASSWORD;
+app.use((_req, res, next) => {
+  res.header("Content-Type", "application/json; charset=utf-8");
+  next();
+});
+
+const secretPath = process.env.SECRET_PATH || "/run/secrets/password";
+const dbPassword = fs.existsSync(secretPath)
+  ? fs.readFileSync(secretPath, "utf8").trim()
+  : process.env.PASSWORD;
 
 const pool = mysql.createPool({
   host: process.env.HOST,
@@ -22,6 +29,7 @@ const pool = mysql.createPool({
   password: dbPassword,
   database: process.env.DATABASE,
   insecureAuth: true,
+  charset: "utf8mb4",
 });
 
 var jsonParser = bodyParser.json();
@@ -29,6 +37,7 @@ var jsonParser = bodyParser.json();
 app.get("/_api", (_req, res) => {
   pool.query("show tables;", (error, results) => {
     if (error) throw error;
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.json(results);
   });
 });
@@ -36,6 +45,7 @@ app.get("/_api", (_req, res) => {
 app.post("/_api", jsonParser, (req, res) => {
   pool.query(`SELECT * from ${req.body.table};`, (error, results) => {
     if (error) throw error;
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.json(results);
   });
 });
