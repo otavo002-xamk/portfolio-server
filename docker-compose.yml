@@ -34,16 +34,19 @@ services:
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_INIT_SCRIPTS=/docker-entrypoint-initdb.d/init.sql
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_password
+      - MYSQL_USER=${DBUSER}
+      - MYSQL_PASSWORD_FILE=/run/secrets/password
     volumes:
       - mysql_data:/var/lib/mysql
       - ./initdb.d/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ['CMD-SHELL', 'mysqladmin ping -u root']
+      test: ["CMD-SHELL", "mysqladmin ping -u root"]
       interval: 10s
       timeout: 5s
       retries: 5
     secrets:
       - mysql_root_password
+      - password
 
 volumes:
   mysql_data:
