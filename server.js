@@ -17,7 +17,7 @@ app.use((_req, res, next) => {
   next();
 });
 
-const secretPath = process.env.SECRET_PATH || "/run/secrets/password";
+const secretPath = process.env.PASSWORD_FILE || "/run/secrets/password";
 const dbPassword = fs.existsSync(secretPath)
   ? fs.readFileSync(secretPath, "utf8").trim()
   : process.env.PASSWORD;
