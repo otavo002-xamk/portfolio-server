@@ -13,7 +13,7 @@ app.use(
 );
 
 app.use((_req, res, next) => {
-  res.header("Content-Type", "application/json; charset=utf-8");
+  res.header("Content-Type", "application/json; charset=utf8mb4");
   next();
 });
 
@@ -37,7 +37,7 @@ var jsonParser = bodyParser.json();
 app.get("/_api", (_req, res) => {
   pool.query("show tables;", (error, results) => {
     if (error) throw error;
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Content-Type", "application/json; charset=utf8mb4");
     res.json(results);
   });
 });
@@ -45,7 +45,7 @@ app.get("/_api", (_req, res) => {
 app.post("/_api", jsonParser, (req, res) => {
   pool.query(`SELECT * from ${req.body.table};`, (error, results) => {
     if (error) throw error;
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Content-Type", "application/json; charset=utf8mb4");
     res.json(results);
   });
 });
