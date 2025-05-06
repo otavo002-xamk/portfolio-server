@@ -1,6 +1,7 @@
 .env
 node_modules/
 alltables.json
+apiresult.json
 table-content.json
 .vercel
 /initdb.d

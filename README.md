@@ -54,6 +54,8 @@ Before running tests ensure:
         ...
         ]
 
+    6. In server.test.js there is a test case in which nasa api query is performed with parameters { sol: 4074, camera: "FHAZ" }. You should first test the query manually and then copy the result to a file test/apiresult.json to make this test case to pass.
+
 Enter 'npm start' in the CLI to start the server. Run the tests with 'npm test' -command.
 
 To run the project in a docker container:
