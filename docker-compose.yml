@@ -4,9 +4,9 @@ services:
     #build: .
     #Comment the following line if you uncomment the previous line
     image: woudisnakes/portfolio-2023-back:latest
-    command: npm start
     ports:
       - 3001:3001
+      - 9229:9229
     volumes:
       - ./:/usr/src/app
     container_name: back-end
@@ -21,10 +21,12 @@ services:
       - DB_RANDOM_TABLE_NAME_JSON_FILE=${DB_RANDOM_TABLE_NAME_JSON_FILE}
       - FRONT_END_URL=${FRONT_END_URL}
       - PASSWORD_FILE=/run/secrets/password
+      - NASA_API_TOKEN=${NASA_API_TOKEN}
     secrets:
       - password
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: mysql:8
     restart: always
@@ -42,8 +44,8 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -u root"]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 10
     secrets:
       - mysql_root_password
       - password

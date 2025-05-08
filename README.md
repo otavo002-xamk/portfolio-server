@@ -1,9 +1,10 @@
 Portfolio-Server
 
-This project holds a MySQL-backend-server for Portfolio 2023 project. Install dependencies by entering 'npm install' command to CLI in the project's root folder. Before starting the server ensure:
+This project holds a backend-server for Portfolio 2023 project. The "/\_api" endpoints handle the requests to MySQL database. The "/nasa_api" endpoint handles the requests to NASA API. Install dependencies by entering 'npm install' command to CLI in the project's root folder. Before starting the server ensure:
 
     1. you have MySQL server installed and it's up and running.
-    2. you have created a .env file in the project's root directory with required information, for example:
+    2. You have created a NASA API key in NASA's web page api.nasa.gov.
+    3. you have created a .env file in the project's root directory with required information, for example:
 
         PORT=3001
         HOST='localhost'
@@ -14,6 +15,7 @@ This project holds a MySQL-backend-server for Portfolio 2023 project. Install de
         DB_RANDOM_TABLE_NAME='tablename'
         DB_RANDOM_TABLE_NAME_JSON_FILE='tablename'
     	FRONT_END_URL=http://localhost:3000
+        NASA_API_TOKEN=[nasa-api key]
 
 Before running tests ensure:
 
@@ -53,12 +55,14 @@ Before running tests ensure:
         ...
         ]
 
+    6. In server.test.js there is a test case in which nasa api query is performed with parameters { sol: 4074, camera: "FHAZ" }. You should first test the query manually and then copy the result to a file test/apiresult.json to make this test case to pass.
+
 Enter 'npm start' in the CLI to start the server. Run the tests with 'npm test' -command.
 
 To run the project in a docker container:
 
     1. Create a new file named 'initdb.d/init.sql' to the root directory. This is the file you should write your SQL initialization script.
-    
+
     2. Create a file 'mysql_root_password.txt' to the root directory. Write to this file only the root password to the mysql database.
 
     3. Create a file 'password.txt'. Write to this file only the same password that you would've normally written to .env PASSWORD value.
@@ -72,6 +76,7 @@ To run the project in a docker container:
         DB_RANDOM_TABLE_NAME=customers
         DB_RANDOM_TABLE_NAME_JSON_FILE=table-content
         FRONT_END_URL=http://localhost:3000
+        NASA_API_TOKEN=[nasa-api key]
         SECRET_PATH=/run/secrets/password
 
     5. Run 'docker-compose up'. This command pulls both the project's image and mysql image from the registry and then creates the containers from them. If you want to build the project's image locally, then you have to comment out the image-line in the docker-compose file and also uncomment the build-line.

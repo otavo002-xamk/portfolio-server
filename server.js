@@ -4,6 +4,9 @@ const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const fs = require("fs");
+const axios = require("axios");
+
+const NASA_API_TOKEN = process.env.NASA_API_TOKEN;
 
 app.use(
   cors({
@@ -13,7 +16,7 @@ app.use(
 );
 
 app.use((_req, res, next) => {
-  res.header("Content-Type", "application/json; charset=utf-8");
+  res.header("Content-Type", "application/json; charset=utf8mb4");
   next();
 });
 
@@ -32,12 +35,12 @@ const pool = mysql.createPool({
   charset: "utf8mb4",
 });
 
-var jsonParser = bodyParser.json();
+const jsonParser = bodyParser.json();
 
 app.get("/_api", (_req, res) => {
   pool.query("show tables;", (error, results) => {
     if (error) throw error;
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Content-Type", "application/json; charset=utf8mb4");
     res.json(results);
   });
 });
@@ -45,9 +48,21 @@ app.get("/_api", (_req, res) => {
 app.post("/_api", jsonParser, (req, res) => {
   pool.query(`SELECT * from ${req.body.table};`, (error, results) => {
     if (error) throw error;
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Content-Type", "application/json; charset=utf8mb4");
     res.json(results);
   });
+});
+
+app.post("/nasa_api", jsonParser, async (req, res) => {
+  let fetchURL = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${req.body.sol}&camera=${req.body.camera}&api_key=${NASA_API_TOKEN}`;
+  try {
+    const response = await axios.get(fetchURL, { timeout: 10000 });
+    res.setHeader("Content-Type", "application/json; charset=utf8mb4");
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error fetching data from NASA API" });
+  }
 });
 
 module.exports = app;
