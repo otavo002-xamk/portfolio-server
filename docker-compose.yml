@@ -21,6 +21,7 @@ services:
       - DB_RANDOM_TABLE_NAME_JSON_FILE=${DB_RANDOM_TABLE_NAME_JSON_FILE}
       - FRONT_END_URL=${FRONT_END_URL}
       - PASSWORD_FILE=/run/secrets/password
+      - NASA_API_TOKEN=${NASA_API_TOKEN}
     secrets:
       - password
     depends_on:
