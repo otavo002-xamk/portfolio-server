@@ -3,7 +3,8 @@ Portfolio-Server
 This project holds a backend-server for Portfolio 2023 project. The "/\_api" endpoints handle the requests to MySQL database. The "/nasa_api" endpoint handles the requests to NASA API. Install dependencies by entering 'npm install' command to CLI in the project's root folder. Before starting the server ensure:
 
     1. you have MySQL server installed and it's up and running.
-    2. you have created a .env file in the project's root directory with required information, for example:
+    2. You have created a NASA API key in NASA's web page api.nasa.gov.
+    3. you have created a .env file in the project's root directory with required information, for example:
 
         PORT=3001
         HOST='localhost'
@@ -14,7 +15,7 @@ This project holds a backend-server for Portfolio 2023 project. The "/\_api" end
         DB_RANDOM_TABLE_NAME='tablename'
         DB_RANDOM_TABLE_NAME_JSON_FILE='tablename'
     	FRONT_END_URL=http://localhost:3000
-        NASA_API_TOKEN=[nasa-api token]
+        NASA_API_TOKEN=[nasa-api key]
 
 Before running tests ensure:
 
@@ -75,7 +76,7 @@ To run the project in a docker container:
         DB_RANDOM_TABLE_NAME=customers
         DB_RANDOM_TABLE_NAME_JSON_FILE=table-content
         FRONT_END_URL=http://localhost:3000
-        NASA_API_TOKEN=[nasa-api token]
+        NASA_API_TOKEN=[nasa-api key]
         SECRET_PATH=/run/secrets/password
 
     5. Run 'docker-compose up'. This command pulls both the project's image and mysql image from the registry and then creates the containers from them. If you want to build the project's image locally, then you have to comment out the image-line in the docker-compose file and also uncomment the build-line.
