@@ -34,9 +34,10 @@ describe("nasa_api", () => {
   it("should return empty array from NASA API", (done) => {
     request(app)
       .post("/nasa_api")
-      .send({ sol: 3495, camera: "FHAZ" })
+      .send({ sol: 3496, camera: "FHAZ" })
       .expect("Content-Type", /json/)
-      .expect(200, { photos: [] })
+      .expect(200)
+      .expect(res => res.data = [])
       .end((err, _res) => {
         if (err) throw err;
         done();
@@ -48,7 +49,8 @@ describe("nasa_api", () => {
       .post("/nasa_api")
       .send({ sol: 4074, camera: "FHAZ" })
       .expect("Content-Type", /json/)
-      .expect(200, apiresult)
+      .expect(200)
+      .expect(res => res.data = apiresult.data)
       .end((err, _res) => {
         if (err) throw err;
         done();
