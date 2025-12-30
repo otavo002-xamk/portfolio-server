@@ -54,9 +54,9 @@ app.post("/_api", jsonParser, (req, res) => {
 });
 
 app.post("/nasa_api", jsonParser, async (req, res) => {
-  let fetchURL = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${req.body.sol}&camera=${req.body.camera}&api_key=${NASA_API_TOKEN}`;
+  let fetchURL = `https://api.marsvista.dev/api/v2/photos?rovers=curiosity&sol_min=${req.body.sol}&sol_max=${req.body.sol}&cameras=${req.body.camera}&include=rover,camera`;
   try {
-    const response = await axios.get(fetchURL, { timeout: 10000 });
+    const response = await axios.get(fetchURL, { timeout: 10000, headers: { "X-API-Key": NASA_API_TOKEN } });
     res.setHeader("Content-Type", "application/json; charset=utf8mb4");
     res.json(response.data);
   } catch (error) {
